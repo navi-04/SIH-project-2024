@@ -1,3 +1,9 @@
+import sqlite3
+connection = sqlite3.connect('database.db')
+cursor = connection.cursor()
+
+
+
 print("--------> welcome to the farmers connections <--------")
 
 while(True):
@@ -5,9 +11,11 @@ while(True):
     print("1.Register (for new users only)")
     print("2.Login (for existing users only)")
     print("3.Exit")
+
     ch=int(input("Enter your choice: "))
+
     if ch==1:
-        print("Register")
+        continue
     elif ch==2:
         print("Login")
     elif ch==3:
