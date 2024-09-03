@@ -18,6 +18,7 @@ def create_new_farmer_user() :
     pass
 
 def create_new_consumer_user():
+    hii
     print("user")
     pass
 
