@@ -8,6 +8,13 @@ connection = sqlite3.connect('database.db')
 cursor = connection.cursor()
 
 def verify_the_email() -> bool:
+<<<<<<<<<<<<<<  ✨ Codeium Command ⭐  >>>>>>>>>>>>>>>>
+    """
+    This function takes an email address as an argument and checks whether it is in the correct format or not.
+    If the email address is in the correct format, then the function returns True, else False.
+    The correct format of an email address is a string that contains '@' and '.'.
+    """
+<<<<<<<  936ecba3-6f40-46a6-871d-9ccce5acaade  >>>>>>>
     pass
 
 def verify_the_user_login() -> tuple[ bool, str]:
@@ -55,6 +62,7 @@ if __name__ == '__main__':
     print("--------> welcome to the farmers connections <--------")
 
     while(True):
+
         print("\n\n---- Menu ----\n")
         print("1.Register (for new users only)")
         print("2.Login (for existing users only)")
@@ -63,11 +71,15 @@ if __name__ == '__main__':
         ch=int(input("\nEnter your choice: "))
 
         if ch==1:
+
             while(True):
+
                 print("\n1. farmer")
                 print("2. consumer")
                 print("3. Exit\n")
+
                 ch=int(input("\nEnter your choice: "))
+
                 if ch==1:
                     create_new_farmer_user()
                 elif ch==2:
@@ -75,20 +87,40 @@ if __name__ == '__main__':
                 elif ch==3:
                     print("\ngetting back to menu")
                     break
+
         elif ch==2:
+
             flag , user = verify_the_user_login()
             if flag:
+
                 print("\nlogin successful")
                 print("\n---- Home ----\n")
+
                 if(user == "farmer"):
-                    pass
+
+                    print("---- menu ----")
+                    print("\n1. Add product")
+                    print("2. Update product")
+                    print("3. Delete product\n")
+
+                    ch=int(input("\nEnter your choice: "))
+
+                    if ch==1:
+                        add_product()
+                    elif ch==2:
+                        pass
+                    elif ch==3:
+                        pass
+
                 elif(user == "consumer"):
                     pass
 
             else:
+
                 print("\nlogin failed")
 
         elif ch==3:
+
             print("\nThank you for using our application")
             break
 
