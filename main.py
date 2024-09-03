@@ -10,6 +10,7 @@ def create_new_farmer_user():
     pass
 
 def create_new_consumer_user():
+    print("user")
     pass
 
 if __name__ == '__main__':
