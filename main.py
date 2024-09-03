@@ -1,5 +1,8 @@
 import re
 
+from twilio.rest import Client
+import random
+
 import sqlite3
 connection = sqlite3.connect('database.db')
 cursor = connection.cursor()
@@ -10,15 +13,38 @@ def verify_the_email() -> bool:
 def verify_the_user_login() -> bool:
     pass
 
-def verify_via_otp() -> bool:
-    pass
+def verify_via_otp(to_phone_number: str) -> bool:
+
+    """
+    This function sends a message to the given phone number with a random OTP and prompts the user to enter the OTP.
+    If the OTP entered by the user matches the sent OTP, then the function returns True, else False.
+    This function is to be used for verification of the user's phone number.
+    
+    Parameters:
+    to_phone_number (str): The phone number to which the OTP message is to be sent.
+    
+    Returns:
+    bool: True if the OTP entered by the user matches the sent OTP else False.
+    """
+
+    account_sid = 'AC43a68689f9067780b21993d830e39c8f'
+    auth_token = '7795b97e29dc833c8bb6416c132c30b8'
+    otp = str(random.randint(100000, 999999))
+    message = Client(account_sid, auth_token).messages.create(
+        body=f"Your OTP is {otp}",
+        from_='+18315083621',
+        to=to_phone_number
+    )
+    if(otp == input("Enter OTP: ")):
+        return True
+    else:
+        return False
 
 def create_new_farmer_user() :
     verify_via_otp()
     pass
 
 def create_new_consumer_user():
-    hii
     print("user")
     pass
 
