@@ -4,16 +4,16 @@ import sqlite3
 connection = sqlite3.connect('database.db')
 cursor = connection.cursor()
 
-def verify_the_email():
+def verify_the_email() -> bool:
     pass
 
-def verify_the_user_login():
+def verify_the_user_login() -> bool:
     pass
 
-def verify_via_otp():
+def verify_via_otp() -> bool:
     pass
 
-def create_new_farmer_user():
+def create_new_farmer_user() :
     verify_via_otp()
     cursor.execute("INSERT INTO farmer VALUES (?,?,?,?)", (name, email, phone, password))
     pass
