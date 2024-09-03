@@ -16,6 +16,9 @@ def update_product():
 def delete_product():
     pass
 
+def display_all_products():
+    pass
+
 def is_valid_email(email: str) -> bool:
 
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
@@ -111,19 +114,27 @@ if __name__ == '__main__':
 
                 if(user == "farmer"):
 
-                    print("---- menu ----")
-                    print("\n1. Add product")
-                    print("2. Update product")
-                    print("3. Delete product\n")
+                    while(True):
+                        print("---- menu ----")
+                        print("\n1. Add product")
+                        print("2. Update product")
+                        print("3. Delete product")
+                        print("4. view the aviable products")
+                        print("5. Exit\n")
 
-                    ch=int(input("\nEnter your choice: "))
+                        ch=int(input("\nEnter your choice: "))
 
-                    if ch==1:
-                        add_product()
-                    elif ch==2:
-                        pass
-                    elif ch==3:
-                        pass
+                        if ch==1:
+                            add_product()
+                        elif ch==2:
+                            update_product()
+                        elif ch==3:
+                            delete_product()
+                        elif ch==4:
+                            display_all_products()
+                        elif ch==5:
+                            print("\ngetting back to menu")
+                            break
 
                 elif(user == "consumer"):
                     pass
