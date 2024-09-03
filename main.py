@@ -16,11 +16,12 @@ if __name__ == '__main__':
         ch=int(input("Enter your choice: "))
 
         if ch==1:
-            continue
+           print("Register")
         elif ch==2:
             print("Login")
         elif ch==3:
             print("Thank you for using our application")
             break
+
 
 
