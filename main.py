@@ -7,14 +7,16 @@ import sqlite3
 connection = sqlite3.connect('database.db')
 cursor = connection.cursor()
 
+def add_product():
+    pass
+
+def update_product():
+    pass
+
+def delete_product():
+    pass
+
 def verify_the_email() -> bool:
-<<<<<<<<<<<<<<  ✨ Codeium Command ⭐  >>>>>>>>>>>>>>>>
-    """
-    This function takes an email address as an argument and checks whether it is in the correct format or not.
-    If the email address is in the correct format, then the function returns True, else False.
-    The correct format of an email address is a string that contains '@' and '.'.
-    """
-<<<<<<<  936ecba3-6f40-46a6-871d-9ccce5acaade  >>>>>>>
     pass
 
 def verify_the_user_login() -> tuple[ bool, str]:
