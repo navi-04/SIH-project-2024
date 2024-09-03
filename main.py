@@ -8,19 +8,26 @@ connection = sqlite3.connect('database.db')
 cursor = connection.cursor()
 
 def verify_the_email() -> bool:
-    pass
+    
+    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    return re.match(pattern, email) is not None
 
 def verify_the_user_login() -> tuple[ bool, str]:
+    user_type = input("Enter 'farmer' or 'consumer': ")
     table_name = 'farmers' if user_type == 'farmer' else 'consumers'
-    cursor.execute(f"SELECT * FROM {table_name} WHERE username=? AND password=?", (username, password))
+
+    email = input("Enter email: ")
+    password = input("Enter password: ")
+
+    cursor.execute(f"SELECT * FROM {table_name} WHERE email=? AND password=?", (email, password))
     user = cursor.fetchone()
     
     if user:
-        print(f"Welcome back, {username}!")
-        return True
+        print(f"\nWelcome back, {email}!")
+        return True,user_type
     else:
-        print("Invalid username or password.")
-        return False
+        print("\nInvalid username or password.")
+        return False , user_type
 
 def verify_via_otp(to_phone_number: str) -> bool:
 

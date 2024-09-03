@@ -34,7 +34,29 @@ def verify_the_email(email: str) -> bool:
     pass
 
 def verify_the_user_login() -> tuple[ bool, str]:
-    pass
+
+    user_type = input("Enter 'farmer' or 'consumer': ")
+    table_name = 'farmers' if user_type == 'farmer' else 'consumers'
+
+    while(True):
+        email = input("Enter email: ")
+        password = input("Enter password: ")
+
+        if verify_the_email(email):
+
+            cursor.execute(f"SELECT * FROM {table_name} WHERE email=? AND password=?", (email, password))
+            user = cursor.fetchone()
+            if user:
+                print(f"\nWelcome back, {email}!")
+                return True,user_type
+            else:
+                print("\nInvalid username or password.")
+                return False , user_type
+        
+        else:
+            print("\nInvalid email format. Please enter a valid email.")
+
+
 
 def verify_via_otp(to_phone_number: str) -> bool:
 
