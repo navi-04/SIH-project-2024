@@ -7,7 +7,6 @@ import sqlite3
 connection = sqlite3.connect('database.db')
 cursor = connection.cursor()
 
-<<<<<<< HEAD
 def add_product():
     pass
 
@@ -17,13 +16,11 @@ def update_product():
 def delete_product():
     pass
 
-def verify_the_email() -> bool:
-=======
-
 def is_valid_email(email: str) -> bool:
-    
+
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     return re.match(pattern, email) is not None
+
 
 def verify_the_email(email: str) -> bool:
     if is_valid_email(email):
@@ -31,7 +28,6 @@ def verify_the_email(email: str) -> bool:
     else:
         print("Invalid email format. Please enter a valid email.")
         return False
->>>>>>> c36e20caedc9c50529548e95beb95e51bca16634
     pass
 
 def verify_the_user_login() -> tuple[ bool, str]:
