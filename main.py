@@ -1,6 +1,14 @@
+import re
+
 import sqlite3
 connection = sqlite3.connect('database.db')
 cursor = connection.cursor()
+
+def verify_the_email():
+    pass
+
+def verify_the_user_login():
+    pass
 
 def verify_via_otp():
     pass
@@ -27,9 +35,20 @@ if __name__ == '__main__':
         ch=int(input("Enter your choice: "))
 
         if ch==1:
-            create_new_farmer_user()
+            while(True):
+                print("1. farmer")
+                print("2. consumer")
+                print("3. Exit")
+                ch=int(input("Enter your choice: "))
+                if ch==1:
+                    create_new_farmer_user()
+                elif ch==2:
+                    create_new_consumer_user()
+                elif ch==3:
+                    print("getting back to menu")
+                    break
         elif ch==2:
-            pass
+            verify_the_user_login()
         elif ch==3:
             print("Thank you for using our application")
             break
