@@ -7,34 +7,20 @@ import sqlite3
 connection = sqlite3.connect('database.db')
 cursor = connection.cursor()
 
-def add_product():
-    pass
-
-def update_product():
-    pass
-
-def delete_product():
-    pass
-
-def display_all_products():
-    pass
-
-def is_valid_email(email: str) -> bool:
-
-    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-    return re.match(pattern, email) is not None
-
-
-def verify_the_email(email: str) -> bool:
-    if is_valid_email(email):
-        return True
-    else:
-        print("Invalid email format. Please enter a valid email.")
-        return False
+def verify_the_email() -> bool:
     pass
 
 def verify_the_user_login() -> tuple[ bool, str]:
-    pass
+    table_name = 'farmers' if user_type == 'farmer' else 'consumers'
+    cursor.execute(f"SELECT * FROM {table_name} WHERE username=? AND password=?", (username, password))
+    user = cursor.fetchone()
+    
+    if user:
+        print(f"Welcome back, {username}!")
+        return True
+    else:
+        print("Invalid username or password.")
+        return False
 
 def verify_via_otp(to_phone_number: str) -> bool:
 
@@ -78,7 +64,6 @@ if __name__ == '__main__':
     print("--------> welcome to the farmers connections <--------")
 
     while(True):
-
         print("\n\n---- Menu ----\n")
         print("1.Register (for new users only)")
         print("2.Login (for existing users only)")
@@ -87,15 +72,11 @@ if __name__ == '__main__':
         ch=int(input("\nEnter your choice: "))
 
         if ch==1:
-
             while(True):
-
                 print("\n1. farmer")
                 print("2. consumer")
                 print("3. Exit\n")
-
                 ch=int(input("\nEnter your choice: "))
-
                 if ch==1:
                     create_new_farmer_user()
                 elif ch==2:
@@ -103,48 +84,20 @@ if __name__ == '__main__':
                 elif ch==3:
                     print("\ngetting back to menu")
                     break
-
         elif ch==2:
-
             flag , user = verify_the_user_login()
             if flag:
-
                 print("\nlogin successful")
                 print("\n---- Home ----\n")
-
                 if(user == "farmer"):
-
-                    while(True):
-                        print("---- menu ----")
-                        print("\n1. Add product")
-                        print("2. Update product")
-                        print("3. Delete product")
-                        print("4. view the aviable products")
-                        print("5. Exit\n")
-
-                        ch=int(input("\nEnter your choice: "))
-
-                        if ch==1:
-                            add_product()
-                        elif ch==2:
-                            update_product()
-                        elif ch==3:
-                            delete_product()
-                        elif ch==4:
-                            display_all_products()
-                        elif ch==5:
-                            print("\ngetting back to menu")
-                            break
-
+                    pass
                 elif(user == "consumer"):
                     pass
 
             else:
-
                 print("\nlogin failed")
 
         elif ch==3:
-
             print("\nThank you for using our application")
             break
 
