@@ -10,7 +10,7 @@ cursor = connection.cursor()
 def verify_the_email() -> bool:
     pass
 
-def verify_the_user_login() -> bool:
+def verify_the_user_login() -> tuple[ bool, str]:
     pass
 
 def verify_via_otp(to_phone_number: str) -> bool:
@@ -76,10 +76,14 @@ if __name__ == '__main__':
                     print("\ngetting back to menu")
                     break
         elif ch==2:
-            if verify_the_user_login():
+            flag , user = verify_the_user_login()
+            if flag:
                 print("\nlogin successful")
                 print("\n---- Home ----\n")
-                
+                if(user == "farmer"):
+                    pass
+                elif(user == "consumer"):
+                    pass
 
             else:
                 print("\nlogin failed")
