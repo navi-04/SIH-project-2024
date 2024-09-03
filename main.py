@@ -64,8 +64,18 @@ def create_new_farmer_user() :
     pass
 
 def create_new_consumer_user():
-    print("user")
-    pass
+    print("---- Consumer Registration ----")
+    username = input("Enter your username: ")
+    email = input("Enter your email: ")
+    password = input("Enter your password: ")
+
+    if verify_the_email(email) and verify_via_otp():
+        cursor.execute("INSERT INTO consumers (username, email, password) VALUES (?, ?, ?)",
+                       (username, email, password))
+        connection.commit()
+        print("Consumer user created successfully.")
+
+    
 
 if __name__ == '__main__':
     
