@@ -2,6 +2,15 @@ import sqlite3
 connection = sqlite3.connect('database.db')
 cursor = connection.cursor()
 
+def verify_via_otp():
+    pass
+
+def create_new_farmer_user():
+    verify_via_otp()
+    pass
+
+def create_new_consumer_user():
+    pass
 
 if __name__ == '__main__':
     
@@ -16,9 +25,9 @@ if __name__ == '__main__':
         ch=int(input("Enter your choice: "))
 
         if ch==1:
-           print("Register")
+            create_new_farmer_user()
         elif ch==2:
-            print("Login")
+            pass
         elif ch==3:
             print("Thank you for using our application")
             break
