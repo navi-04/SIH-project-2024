@@ -48,6 +48,7 @@ def verify_via_otp(to_phone_number: str) -> bool:
     
     Returns:
     bool: True if the OTP entered by the user matches the sent OTP else False.
+    
     """
 
     account_sid = 'ACa7fc0ab9bb23712402dff867549c01e8'
