@@ -7,6 +7,7 @@ def verify_via_otp():
 
 def create_new_farmer_user():
     verify_via_otp()
+    cursor.execute("INSERT INTO farmer VALUES (?,?,?,?)", (name, email, phone, password))
     pass
 
 def create_new_consumer_user():
