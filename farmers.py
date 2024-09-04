@@ -72,10 +72,10 @@ def delete_farmer(email, phone_number):
         c.close()
 
 # Example usage
-if __name__ == "_main_":
+if True:
     # Create the table
     create_farmers_table()
-    
+    print("Table 'farmers' created successfully.")
     # Insert a new farmer
     insert_farmer("john@example.com", "123 Farm Road", "securepassword", "1234567890", "123456", "Wheat, Corn")
 
@@ -88,7 +88,6 @@ if __name__ == "_main_":
     print(select_farmer("john@example.com", "1234567890"))
 
     # Delete the farmer
-    delete_farmer("john@example.com", "1234567890")
     
     # Verify deletion
     print("After Deletion:")
