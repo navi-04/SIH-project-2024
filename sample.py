@@ -49,6 +49,10 @@ def pre_booking():
 # Example usage of pre_booking function
 pre_booking()
 
+<<<<<<< Updated upstream
 
+=======
+# Closing the connection after usage
+>>>>>>> Stashed changes
 connection.close()
 
