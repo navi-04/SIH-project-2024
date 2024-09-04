@@ -11,27 +11,113 @@ def is_valid_phone_number(phone_number: str) -> bool:
     pattern = r'^\+?1?\d{9,15}$'
     return re.match(pattern, phone_number) is not None
 
-def verify_the_email(email : str) -> bool:
-    
+def buy_products():
+     print("\n---- Buy Products ----")
+    display_all_products()
+    product_name = input("Enter the name of the product you want to buy: ")
+    cursor.execute("SELECT * FROM product_page WHERE name=?", (product_name,))
+    product = cursor.fetchone()
+
+    if product and product[5]:  # Check if the product is available
+        print(f"You bought {product[1]} for {product[4]}.\n")
+    else:
+        print("Product is not available or doesn't exist.\n")
+
+
+def pre_booking():
+    print("\n---- Pre-book Products ----")
+    display_all_products()
+    product_name = input("Enter the name of the product you want to pre-book: ")
+    cursor.execute("SELECT * FROM product_page WHERE name=?", (product_name,))
+    product = cursor.fetchone()
+
+    if product:
+        print(f"You have pre-booked {product[1]}.\n")
+    else:
+        print("Product doesn't exist.\n")
+
+
+def add_product():
+    print("\n---- Add Product ----")
+    name = input("Enter product name: ")
+    description = input("Enter product description: ")
+    capacity = input("Enter product capacity: ")
+    price = float(input("Enter product price: "))
+    available_product = input("Is the product available (yes/no): ").strip().lower() == 'yes'
+    duration = input("Enter product duration: ")
+
+    cursor.execute("INSERT INTO product_page (name, description, capacity, price, available_product, duration) VALUES (?, ?, ?, ?, ?, ?)",
+                   (name, description, capacity, price, available_product, duration))
+    connection.commit()
+    print("\nProduct added successfully.\n")
+
+def update_product():
+    print("\n---- Update Product ----")
+    name = input("Enter the product name you want to update: ")
+    cursor.execute("SELECT * FROM product_page WHERE name=?", (name,))
+    product = cursor.fetchone()
+
+    if product:
+        new_description = input("Enter new description: ")
+        new_capacity = input("Enter new capacity: ")
+        new_price = float(input("Enter new price: "))
+        new_available_product = input("Is the product available (yes/no): ").strip().lower() == 'yes'
+        new_duration = input("Enter new duration: ")
+
+        cursor.execute("""
+            UPDATE product_page
+            SET description=?, capacity=?, price=?, available_product=?, duration=?
+            WHERE name=?""",
+            (new_description, new_capacity, new_price, new_available_product, new_duration, name))
+        connection.commit()
+        print("\nProduct updated successfully.\n")
+    else:
+        print("Product not found.")
+
+def delete_product():
+    print("\n---- Delete Product ----")
+    name = input("Enter the product name you want to delete: ")
+    cursor.execute("DELETE FROM product_page WHERE name=?", (name,))
+    connection.commit()
+    print("\nProduct deleted successfully.\n")
+
+def display_all_products():
+    print("\n---- All Products ----")
+    cursor.execute("SELECT * FROM product_page")
+    products = cursor.fetchall()
+
+    for product in products:
+        print(f"Name: {product[1]}, Description: {product[2]}, Capacity: {product[3]}, Price: {product[4]}, Available: {product[5]}, Duration: {product[6]}")
+    print("\n")
+
+def verify_the_email(email: str) -> bool:
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     return re.match(pattern, email) is not None
 
 def verify_the_user_login() -> tuple[ bool, str]:
+
     user_type = input("Enter 'farmer' or 'consumer': ")
     table_name = 'farmers' if user_type == 'farmer' else 'consumers'
 
-    email = input("Enter email: ")
-    password = input("Enter password: ")
+    while(True):
+        email = input("Enter email: ")
+        password = input("Enter password: ")
 
-    cursor.execute(f"SELECT * FROM {table_name} WHERE email=? AND password=?", (email, password))
-    user = cursor.fetchone()
-    
-    if user:
-        print(f"\nWelcome back, {email}!")
-        return True,user_type
-    else:
-        print("\nInvalid username or password.")
-        return False , user_type
+        if verify_the_email(email):
+
+            cursor.execute(f"SELECT * FROM {table_name} WHERE email=? AND password=?", (email, password))
+            user = cursor.fetchone()
+            if user:
+                print(f"\nWelcome back, {email}!")
+                return True,user_type
+            else:
+                print("\nInvalid username or password.")
+                return False , user_type
+        
+        else:
+            print("\nInvalid email format. Please enter a valid email.")
+
+
 
 def verify_via_otp(to_phone_number: str) -> bool:
 
@@ -55,7 +141,7 @@ def verify_via_otp(to_phone_number: str) -> bool:
     message = Client(account_sid, auth_token).messages.create(
         body=f"Your OTP is {otp}",
         from_='+18307420985',
-        to='+91' + to_phone_number
+        to=to_phone_number
     )
 
     if(otp == input("Enter OTP: ")):
@@ -155,13 +241,12 @@ def create_new_consumer_user():
         print("Failed to create consumer user.")
         return None
 
-    
-
 if __name__ == '__main__':
     
     print("--------> welcome to the farmers connections <--------")
 
     while(True):
+
         print("\n\n---- Menu ----\n")
         print("1.Register (for new users only)")
         print("2.Login (for existing users only)")
@@ -170,11 +255,15 @@ if __name__ == '__main__':
         ch=int(input("\nEnter your choice: "))
 
         if ch==1:
+
             while(True):
+
                 print("\n1. farmer")
                 print("2. consumer")
                 print("3. Exit\n")
+
                 ch=int(input("\nEnter your choice: "))
+
                 if ch==1:
                     create_new_farmer_user()
                     break
@@ -184,20 +273,66 @@ if __name__ == '__main__':
                 elif ch==3:
                     print("\ngetting back to menu")
                     break
+
         elif ch==2:
+
             flag , user = verify_the_user_login()
             if flag:
+
                 print("\nlogin successful")
                 print("\n---- Home ----\n")
+
                 if(user == "farmer"):
-                    pass
+
+                    while(True):
+                        print("---- menu ----")
+                        print("\n1. Add product")
+                        print("2. Update product")
+                        print("3. Delete product")
+                        print("4. view the aviable products")
+                        print("5. Exit\n")
+
+                        ch=int(input("\nEnter your choice: "))
+
+                        if ch==1:
+                            add_product()
+                        elif ch==2:
+                            update_product()
+                        elif ch==3:
+                            delete_product()
+                        elif ch==4:
+                            display_all_products()
+                        elif ch==5:
+                            print("\ngetting back to menu")
+                            break
+
                 elif(user == "consumer"):
-                    pass
+
+                    print("\n---- menu ----")
+
+                    display_all_products()
+
+                    print("1. buy products")
+                    print("2. pre booking ")
+                    print("3. Exit\n")
+
+                    ch=int(input("\nEnter your choice: "))
+
+                    if ch==1:
+                        buy_products()
+                    elif ch==2:
+                        pre_booking()
+                    elif ch==3:
+                        print("\ngetting back to menu")
+                        break
+
 
             else:
+
                 print("\nlogin failed")
 
         elif ch==3:
+
             print("\nThank you for using our application")
             break
 
