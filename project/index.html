@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmers Connection</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Farmers Connection</h1>
+        <div id="mainMenu">
+            <ul class="menu">
+                <li><button onclick="showRegisterMenu()">Register (for new users only)</button></li>
+                <li><button onclick="showLoginForm()">Login (for existing users only)</button></li>
+                <li><button onclick="exit()">Exit</button></li>
+            </ul>
+        </div>
+        <div id="registerMenu" class="hidden">
+            <ul class="menu">
+                <li><button onclick="showFarmerRegistration()">Farmer</button></li>
+                <li><button onclick="showConsumerRegistration()">Consumer</button></li>
+                <li><button onclick="backToMainMenu()">Back to Main Menu</button></li>
+            </ul>
+        </div>
+        <div id="farmerRegistration" class="hidden">
+            <h2>Farmer Registration</h2>
+            <form id="farmerForm">
+                <div class="form-group">
+                    <label for="farmerEmail">Email:</label>
+                    <input type="email" id="farmerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="farmerAddress">Address:</label>
+                    <input type="text" id="farmerAddress" required>
+                </div>
+                <div class="form-group">
+                    <label for="farmerPassword">Password:</label>
+                    <input type="password" id="farmerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="farmerPhone">Phone Number:</label>
+                    <input type="tel" id="farmerPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="farmerPincode">Pincode:</label>
+                    <input type="text" id="farmerPincode" required>
+                </div>
+                <div class="form-group">
+                    <label for="farmerProducts">Products (comma-separated):</label>
+                    <input type="text" id="farmerProducts" required>
+                </div>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+        <div id="consumerRegistration" class="hidden">
+            <h2>Consumer Registration</h2>
+            <form id="consumerForm">
+                <div class="form-group">
+                    <label for="consumerEmail">Email:</label>
+                    <input type="email" id="consumerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="consumerPassword">Password:</label>
+                    <input type="password" id="consumerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="consumerPhone">Phone Number:</label>
+                    <input type="tel" id="consumerPhone" required>
+                </div>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+        <div id="loginForm" class="hidden">
+            <h2>Login</h2>
+            <form id="loginFormElement">
+                <div class="form-group">
+                    <label for="loginEmail">Email:</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password:</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="userType">User Type:</label>
+                    <select id="userType">
+                        <option value="farmer">Farmer</option>
+                        <option value="consumer">Consumer</option>
+                    </select>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+        <div id="farmerDashboard" class="hidden">
+            <h2>Farmer Dashboard</h2>
+            <ul class="menu">
+                <div id="productList" class="hidden"></div>
+                <li><button onclick="showAddProductForm()">Add Product</button></li>
+                <li><button onclick="showUpdateProductForm()">Update Product</button></li>
+                <li><button onclick="showDeleteProductForm()">Delete Product</button></li>
+                <!-- <li><button onclick="viewAvailableProducts();">View Available Products</button></li> -->
+                <li><button onclick="logout()">Logout</button></li>
+            </ul>
+            <div id="productManagement" class="hidden">
+                <h3 id="productFormTitle"></h3>
+                <form id="productForm">
+                    <div class="form-group">
+                        <label for="productName">Product Name:</label>
+                        <input type="text" id="productName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productDescription">Description:</label>
+                        <input type="text" id="productDescription" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productCapacity">Capacity:</label>
+                        <input type="text" id="productCapacity" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productPrice">Price:</label>
+                        <input type="text" id="productPrice" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productAvailability">Available:</label>
+                        <select id="productAvailability">
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="productDuration">Duration:</label>
+                        <input type="text" id="productDuration" required>
+                    </div>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+        <div id="consumerDashboard" class="hidden">
+            <h2>Consumer Dashboard</h2>
+            <div id="productList"></div>
+            <ul class="menu">
+                <li><button onclick="showBuyProductForm()">Buy Products</button></li>
+                <li><button onclick="showPreBookingForm()">Pre-booking</button></li>
+                <li><button onclick="logout()">Logout</button></li>
+            </ul>
+            <div id="buyProductForm" class="hidden">
+                <h3>Buy Product</h3>
+                <form id="buyForm">
+                    <div class="form-group">
+                        <label for="buyProductName">Product Name:</label>
+                        <input type="text" id="buyProductName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="buyProductCapacity">Capacity:</label>
+                        <input type="text" id="buyProductCapacity" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="buyProductDate">Delivery Date:</label>
+                        <input type="date" id="buyProductDate" required>
+                    </div>
+                    <button type="submit">Buy</button>
+                </form>
+            </div>
+            <div id="preBookingForm" class="hidden">
+                <h3>Pre-booking</h3>
+                <form id="preBookForm">
+                    <div class="form-group">
+                        <label for="preBookProductName">Product Name:</label>
+                        <input type="text" id="preBookProductName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="preBookProductCapacity">Capacity:</label>
+                        <input type="text" id="preBookProductCapacity" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="preBookProductDate">Delivery Date:</label>
+                        <input type="date" id="preBookProductDate" required>
+                    </div>
+                    <button type="submit">Pre-book</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
