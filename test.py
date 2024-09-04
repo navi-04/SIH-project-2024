@@ -39,3 +39,23 @@ def create_product_page_table():
         conn.execute(CREATE_PRODUCT_PAGE)
         print("ok")
 create_product_page_table()
+
+
+CREATE_CONSUMERS_TABLE = '''
+CREATE TABLE IF NOT EXISTS consumers (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL,
+    phonenumber TEXT,
+    buyed_products TEXT,
+    prebooked_products TEXT
+);
+'''
+def create_consumers_table():
+    conn = sqlite3.connect('consumers.db')
+    with conn:
+        conn.execute(CREATE_CONSUMERS_TABLE)
+    conn.close()
+    print("Table 'consumers' created successfully.")
+
+    create_consumers_table()
