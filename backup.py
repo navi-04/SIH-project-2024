@@ -20,8 +20,31 @@ def display_all_products():
 def buy_products():
 
     product = input("Enter the product name: ")
-    capacity = input("Enter the product capacity: ")
+    capacity = 0
+    while(True):
+        capacity = int(input("Enter the product capacity: "))
+        if capacity > 60:
+            print("Capacity is minimum for the marketers")
+            continue
+        else:
+            break
     date = input("Enter the delivery date (YYYY-MM-DD): ")
+    cursor.execute("SELECT price FROM product_page WHERE name = ?", (product,))
+    print("you have to pay the advanced amount: ", (cursor.fetchone()[0]*capacity)/2, "Rs")
+
+    real_capacity = cursor.execute("SELECT capacity FROM product_page WHERE name = ?", (product,)).fetchone()[0]
+    print("continue?(yes or no)")
+    if input() == "no":
+        print("Thank you for using our product service")
+        return None
+    else: 
+        print("Payment successful")
+
+    query = f"UPDATE product_page SET capacity = ? WHERE name = ?"
+    
+    # Execute the update query
+    cursor.execute(query, (str(int(real_capacity)-capacity), product))
+    connection.commit()
 
     INSERT_PRODUCT = '''
     INSERT INTO request_farmers (product, capacity, date)
@@ -40,7 +63,13 @@ def buy_products():
 def pre_booking():
     # Prompt user for input
     name = input("Enter the product name for pre-booking: ")
-    capacity = input("Enter the product capacity: ")
+    while(True):
+        capacity = int(input("Enter the product capacity: "))
+        if capacity > 60:
+            print("Capacity is minimum for the marketers")
+            continue
+        else:
+            break
     date = input("Enter the delivery date (YYYY-MM-DD): ")
 
     # SQL command to insert a new record into the Products table
@@ -318,8 +347,11 @@ if __name__ == '__main__':
 
                     print("\n---- menu ----")
 
-                    display_all_products()
                     while(True):
+                        print("\n")
+                        display_all_products()
+                        print("\n")
+
                         print("1. buy products")
                         print("2. pre booking ")
                         print("3. Exit\n")

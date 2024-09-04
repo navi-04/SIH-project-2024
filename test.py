@@ -20,20 +20,20 @@ cursor = connection.cursor()
 
 # print(cursor.execute("SELECT * FROM farmers").fetchall())
 
-CREATE_FARMERS = '''
-CREATE TABLE IF NOT EXISTS request_farmers_prebooking (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    product VARCHAR(100) NOT NULL UNIQUE,
-    capacity VARCHAR(255) NOT NULL,
-    date VARCHAR(100) NOT NULL
-);
-'''
+# CREATE_FARMERS = '''
+# CREATE TABLE IF NOT EXISTS request_farmers_prebooking (
+#     id INTEGER PRIMARY KEY AUTOINCREMENT,
+#     product VARCHAR(100) NOT NULL UNIQUE,
+#     capacity VARCHAR(255) NOT NULL,
+#     date VARCHAR(100) NOT NULL
+# );
+# '''
 
-def create_farmers_table():
-        cursor.execute(CREATE_FARMERS)
-        print("ok")
+# def create_farmers_table():
+#         cursor.execute(CREATE_FARMERS)
+#         print("ok")
 
-create_farmers_table()
+# create_farmers_table()
 
 
 # SQL Commands
@@ -90,8 +90,8 @@ create_farmers_table()
 #         print("ok")
 #         create_product_status_table()
 
-# cursor.execute("delete from farmers where id = 3") 
-# cursor.execute("delete from farmers where id = 4") 
-# cursor.execute("delete from farmers where id = 5") 
-# connection.commit()
-# print(cursor.execute("SELECT * FROM farmers").fetchall())
+cursor.execute("delete from request_farmers where id = 2")
+# # cursor.execute("delete from farmers where id = 4") 
+# # cursor.execute("delete from farmers where id = 5") 
+connection.commit()
+print(cursor.execute("SELECT * FROM request_farmers").fetchall())
