@@ -7,7 +7,11 @@ import sqlite3
 connection = sqlite3.connect('database.db')
 cursor = connection.cursor()
 
-def verify_the_email() -> bool:
+def is_valid_phone_number(phone_number: str) -> bool:
+    pattern = r'^\+?1?\d{9,15}$'
+    return re.match(pattern, phone_number) is not None
+
+def verify_the_email(email : str) -> bool:
     
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     return re.match(pattern, email) is not None
@@ -51,7 +55,7 @@ def verify_via_otp(to_phone_number: str) -> bool:
     message = Client(account_sid, auth_token).messages.create(
         body=f"Your OTP is {otp}",
         from_='+18307420985',
-        to=to_phone_number
+        to='+91' + to_phone_number
     )
 
     if(otp == input("Enter OTP: ")):
@@ -60,20 +64,96 @@ def verify_via_otp(to_phone_number: str) -> bool:
         return False
 
 def create_new_farmer_user() :
-    verify_via_otp()
-    pass
+    print("---- Farmer  Registration ----")
+    
+    email = ''
+    address = ''
+    password = ''
+    c-password = ''
+    phone_number = ''
+    pincode  = ''
+    products = ''
+
+    while(True):
+        email = input("Enter your email: ")
+        if verify_the_email(email):
+            break
+        else:
+            print("\nInvalid email. Please try again.")
+
+
+
+    address = input("Enter your address: ")
+
+    while(True):
+        password = input("Enter your password: ")
+        c_password = input("Confirm your password: ")
+        if password == c_password:
+            break
+        else:
+            print("Passwords don't match. Please try again.")
+
+    while(True):
+        phone_number = input("Enter your phone number: ")
+        if is_valid_phone_number(phone_number):
+            break
+        else:
+            print("\nInvalid phone number. Please try again.")
+
+    pincode = input("Enter your pincode: ")
+
+    products = input("(please separate the products by comma)Enter your products: ")
+
+    if verify_via_otp():
+        cursor.execute("INSERT INTO farmers (email, password, phone_number, address, pincode, products) VALUES (?, ?, ?, ?, ?, ?)",
+                       (email, password, phone_number, address, pincode, products))
+        connection.commit()
+        print("\n Farmer user created successfully.\n")
+    else:
+        print("Failed to create farmer user.")
+        return None
 
 def create_new_consumer_user():
     print("---- Consumer Registration ----")
-    username = input("Enter your username: ")
-    email = input("Enter your email: ")
-    password = input("Enter your password: ")
+    
+    email = ''
+    password = ''
+    c-password = ''
+    phone_number = ''
 
-    if verify_the_email(email) and verify_via_otp():
-        cursor.execute("INSERT INTO consumers (username, email, password) VALUES (?, ?, ?)",
-                       (username, email, password))
+    while(True):
+        email = input("Enter your email: ")
+        if verify_the_email(email):
+            break
+        else:
+            print("\nInvalid email. Please try again.")
+
+
+
+    while(True):
+        password = input("Enter your password: ")
+        c_password = input("Confirm your password: ")
+        if password == c_password:
+            break
+        else:
+            print("Passwords don't match. Please try again.")
+
+    while(True):
+        phone_number = input("Enter your phone number: ")
+        if is_valid_phone_number(phone_number):
+            break
+        else:
+            print("\nInvalid phone number. Please try again.")
+
+
+    if verify_via_otp():
+        cursor.execute("INSERT INTO consumers (email, password, phone_number) VALUES (?, ?, ?)",
+                       (email, password, phone_number))
         connection.commit()
-        print("Consumer user created successfully.")
+        print("\nConsumer user created successfully.\n")
+    else:
+        print("Failed to create consumer user.")
+        return None
 
     
 
@@ -97,8 +177,10 @@ if __name__ == '__main__':
                 ch=int(input("\nEnter your choice: "))
                 if ch==1:
                     create_new_farmer_user()
+                    break
                 elif ch==2:
                     create_new_consumer_user()
+                    break
                 elif ch==3:
                     print("\ngetting back to menu")
                     break
