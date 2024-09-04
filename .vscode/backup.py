@@ -172,7 +172,7 @@ def create_new_consumer_user():
 
 
     if verify_via_otp(phone_number):
-        cursor.execute("INSERT INTO consumers (email, password, phone_number) VALUES (?, ?, ?)",
+        cursor.execute("INSERT INTO consumers (email, password, phonenumber) VALUES (?, ?, ?)",
                        (email, password, phone_number))
         connection.commit()
         print("\nConsumer user created successfully.\n")
@@ -250,20 +250,20 @@ if __name__ == '__main__':
                     print("\n---- menu ----")
 
                     display_all_products()
+                    while(True):
+                        print("1. buy products")
+                        print("2. pre booking ")
+                        print("3. Exit\n")
 
-                    print("1. buy products")
-                    print("2. pre booking ")
-                    print("3. Exit\n")
+                        ch=int(input("\nEnter your choice: "))
 
-                    ch=int(input("\nEnter your choice: "))
-
-                    if ch==1:
-                        buy_products()
-                    elif ch==2:
-                        pre_booking()
-                    elif ch==3:
-                        print("\ngetting back to menu")
-                        break
+                        if ch==1:
+                            buy_products()
+                        elif ch==2:
+                            pre_booking()
+                        elif ch==3:
+                            print("\ngetting back to menu")
+                            break
 
 
             else:
