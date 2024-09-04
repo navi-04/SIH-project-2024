@@ -17,44 +17,45 @@ def display_all_products():
     for product in products:
         print(product)
 
-def buy_products(product_name, product_capacity, delivery_date):
+def buy_products():
 
-    product_name = input("Enter the product name: ")
-    product_capacity = input("Enter the product capacity: ")
-    delivery_date = input("Enter the delivery date (YYYY-MM-DD): ")
+    product = input("Enter the product name: ")
+    capacity = input("Enter the product capacity: ")
+    date = input("Enter the delivery date (YYYY-MM-DD): ")
 
     INSERT_PRODUCT = '''
-    INSERT INTO request_farmers (ProductName, ProductCapacity, DeliveryDate)
+    INSERT INTO request_farmers (product, capacity, date)
     VALUES (?, ?, ?);
     '''
-    cursor.execute("insert into consumers (buyed_products) values (?)", (product_name,))
+    # cursor.execute("insert into consumers (buyed_products) values (?)", (product_name,))
+
     
-    cursor.execute(INSERT_PRODUCT, (product_name, product_capacity, delivery_date))
+    cursor.execute(INSERT_PRODUCT, (product, capacity, date))
 
     connection.commit()
 
-    print(f"Purchase confirmed for {product_name} with a capacity of {product_capacity}. Delivery is scheduled for {delivery_date}.")
+    print(f"Purchase confirmed for {product} with a capacity of {capacity}. Delivery is scheduled for {date}.")
 
 
 def pre_booking():
     # Prompt user for input
-    product_name = input("Enter the product name for pre-booking: ")
-    product_capacity = input("Enter the product capacity: ")
-    delivery_date = input("Enter the delivery date (YYYY-MM-DD): ")
+    name = input("Enter the product name for pre-booking: ")
+    capacity = input("Enter the product capacity: ")
+    date = input("Enter the delivery date (YYYY-MM-DD): ")
 
     # SQL command to insert a new record into the Products table
     INSERT_PRODUCT = '''
-    INSERT INTO request_farmer_prebooking (ProductName, ProductCapacity, DeliveryDate)
+    INSERT INTO request_farmers_prebooking (product, capacity, date)
     VALUES (?, ?, ?);
     '''
-    cursor.execute("insert into consumers (prebooked_products) values (?)", (product_name,))
+    # cursor.execute("insert into consumers (prebooked_products) values (?)", (product_name,))
 
     # Execute the command and commit the changes
-    cursor.execute(INSERT_PRODUCT, (product_name, product_capacity, delivery_date))
+    cursor.execute(INSERT_PRODUCT, (name, capacity, date))
     connection.commit()
 
     # Display a confirmation message
-    print(f"Pre-booking confirmed for {product_name} with a capacity of {product_capacity}. Delivery is scheduled for {delivery_date}.")
+    print(f"Pre-booking confirmed for {name} with a capacity of {capacity}. Delivery is scheduled for {date}.")
 
 def add_product():
 
