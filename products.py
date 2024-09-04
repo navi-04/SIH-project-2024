@@ -85,6 +85,7 @@ def delete_product(name, price):
 if __name__ == "_main_":
     create_product_page_table()  # Create the table if it doesn't exist
 
+
     # Insert some products
     insert_product("Product A", "Description A", "Capacity A", 10.99, True, "1 year")
     insert_product("Product B", "Description B", "Capacity B", 15.49, True, "6 months")
