@@ -1,4 +1,6 @@
 import sqlite3
+connection = sqlite3.connect('database.db')
+cursor = connection.cursor()
 
 # SQL commands to create the table
 CREATE_FARMERS = '''
@@ -14,10 +16,11 @@ CREATE TABLE IF NOT EXISTS farmers (
 '''
 
 def create_farmers_table():
-    conn = sqlite3.connect('database.db')
-    with conn:
-        conn.execute(CREATE_FARMERS)
+        cursor.execute(CREATE_FARMERS)
         print("ok")
 
-create_farmers_table()
+print(cursor.execute("SELECT * FROM farmers").fetchall())
+
+
+
 
