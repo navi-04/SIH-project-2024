@@ -8,7 +8,7 @@ connection = sqlite3.connect('database.db')
 cursor = connection.cursor()
 
 def is_valid_phone_number(phone_number: str) -> bool:
-    pattern = r'^\+?1?\d{9,15}$'
+    pattern = r'^\+?1?\d{10,15}$'
     return re.match(pattern, phone_number) is not None
 
 def display_all_products():
