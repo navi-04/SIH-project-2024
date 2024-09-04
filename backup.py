@@ -11,23 +11,91 @@ def is_valid_phone_number(phone_number: str) -> bool:
     pattern = r'^\+?1?\d{9,15}$'
     return re.match(pattern, phone_number) is not None
 
-def buy_products():
-    pass
+def display_all_products():
+    cursor.execute("SELECT * FROM product_page")
+    products = cursor.fetchall()
+    for product in products:
+        print(product)
+
+def buy_products(product_name, product_capacity, delivery_date):
+
+    product_name = input("Enter the product name: ")
+    product_capacity = input("Enter the product capacity: ")
+    delivery_date = input("Enter the delivery date (YYYY-MM-DD): ")
+
+    INSERT_PRODUCT = '''
+    INSERT INTO request_farmers (ProductName, ProductCapacity, DeliveryDate)
+    VALUES (?, ?, ?);
+    '''
+    cursor.execute("insert into consumers (buyed_products) values (?)", (product_name,))
+    
+    cursor.execute(INSERT_PRODUCT, (product_name, product_capacity, delivery_date))
+
+    connection.commit()
+
+    print(f"Purchase confirmed for {product_name} with a capacity of {product_capacity}. Delivery is scheduled for {delivery_date}.")
+
 
 def pre_booking():
-    pass
+    # Prompt user for input
+    product_name = input("Enter the product name for pre-booking: ")
+    product_capacity = input("Enter the product capacity: ")
+    delivery_date = input("Enter the delivery date (YYYY-MM-DD): ")
+
+    # SQL command to insert a new record into the Products table
+    INSERT_PRODUCT = '''
+    INSERT INTO request_farmer_prebooking (ProductName, ProductCapacity, DeliveryDate)
+    VALUES (?, ?, ?);
+    '''
+    cursor.execute("insert into consumers (prebooked_products) values (?)", (product_name,))
+
+    # Execute the command and commit the changes
+    cursor.execute(INSERT_PRODUCT, (product_name, product_capacity, delivery_date))
+    connection.commit()
+
+    # Display a confirmation message
+    print(f"Pre-booking confirmed for {product_name} with a capacity of {product_capacity}. Delivery is scheduled for {delivery_date}.")
 
 def add_product():
-    pass
+
+    product_name = input("Enter the product name: ")
+    product_description = input("Enter the description: ")
+    product_capacity = input("Enter the product capacity: ")
+    product_price = input("Enter the product price: ")
+    product_avaliability = "yes" if input("Is the product available? (yes/no): ") == "yes" else "no"
+    duration = input("enter the duration:")
+
+    INSERT_PRODUCT = '''
+    INSERT INTO product_page (name, description, capacity,price,available_product,duration)
+    VALUES (?, ?, ?, ?, ?, ?);
+    '''
+    
+    cursor.execute(INSERT_PRODUCT, (product_name, product_description, product_capacity, product_price, product_avaliability, duration))
+
+    connection.commit()
+
+    print("\nproduct added successfully")
 
 def update_product():
-    pass
+    display_all_products()
+    product_name = input("Enter the product name: ")
+    field_name =  input("Enter the field name: ")
+    new_value = input("Enter the new value to insert: ")
+
+    query = f"UPDATE product_page SET {field_name} = ? WHERE name = ?"
+    
+    # Execute the update query
+    cursor.execute(query, (new_value, product_name))
+    connection.commit()
+
+    print(f"Product ID {product_name} updated successfully!")
 
 def delete_product():
-    pass
+    display_all_products()
+    product_name = input("Enter the product name to delete: ")
+    cursor.execute("delete from product_page where name = ?", (product_name,))
+    connection.commit()
 
-def display_all_products():
-    pass
 
 def verify_the_email(email: str) -> bool:
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'

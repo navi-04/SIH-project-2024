@@ -9,7 +9,7 @@ def buy_products(product_name, product_capacity, delivery_date):
     delivery_date = input("Enter the delivery date (YYYY-MM-DD): ")
 
     INSERT_PRODUCT = '''
-    INSERT INTO Products (ProductName, ProductCapacity, DeliveryDate)
+    INSERT INTO product_page (ProductName, ProductCapacity, DeliveryDate)
     VALUES (?, ?, ?);
     '''
 
@@ -35,9 +35,10 @@ def pre_booking():
 
     # SQL command to insert a new record into the Products table
     INSERT_PRODUCT = '''
-    INSERT INTO Products (ProductName, ProductCapacity, DeliveryDate)
+    INSERT INTO request_farmer_prebooking (ProductName, ProductCapacity, DeliveryDate)
     VALUES (?, ?, ?);
     '''
+    cursor.execute("insert into consumers (prebooked_products) values (?)", (product_name,))
 
     # Execute the command and commit the changes
     cursor.execute(INSERT_PRODUCT, (product_name, product_capacity, delivery_date))
@@ -49,10 +50,6 @@ def pre_booking():
 # Example usage of pre_booking function
 pre_booking()
 
-<<<<<<< Updated upstream
-
-=======
-# Closing the connection after usage
->>>>>>> Stashed changes
 connection.close()
+
 
