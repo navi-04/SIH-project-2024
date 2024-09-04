@@ -11,6 +11,12 @@ def is_valid_phone_number(phone_number: str) -> bool:
     pattern = r'^\+?1?\d{9,15}$'
     return re.match(pattern, phone_number) is not None
 
+def buy_products():
+    pass
+
+def pre_booking():
+    pass
+
 def add_product():
     pass
 
@@ -83,12 +89,96 @@ def verify_via_otp(to_phone_number: str) -> bool:
         return False
 
 def create_new_farmer_user() :
-    verify_via_otp()
-    pass
+    print("---- Farmer  Registration ----")
+    
+    email = ''
+    address = ''
+    password = ''
+    c-password = ''
+    phone_number = ''
+    pincode  = ''
+    products = ''
+
+    while(True):
+        email = input("Enter your email: ")
+        if verify_the_email(email):
+            break
+        else:
+            print("\nInvalid email. Please try again.")
+
+
+
+    address = input("Enter your address: ")
+
+    while(True):
+        password = input("Enter your password: ")
+        c_password = input("Confirm your password: ")
+        if password == c_password:
+            break
+        else:
+            print("Passwords don't match. Please try again.")
+
+    while(True):
+        phone_number = input("Enter your phone number: ")
+        if is_valid_phone_number(phone_number):
+            break
+        else:
+            print("\nInvalid phone number. Please try again.")
+
+    pincode = input("Enter your pincode: ")
+
+    products = input("(please separate the products by comma)Enter your products: ")
+
+    if verify_via_otp():
+        cursor.execute("INSERT INTO farmers (email, password, phone_number, address, pincode, products) VALUES (?, ?, ?, ?, ?, ?)",
+                       (email, password, phone_number, address, pincode, products))
+        connection.commit()
+        print("\n Farmer user created successfully.\n")
+    else:
+        print("Failed to create farmer user.")
+        return None
 
 def create_new_consumer_user():
-    print("user")
-    pass
+    print("---- Consumer Registration ----")
+    
+    email = ''
+    password = ''
+    c-password = ''
+    phone_number = ''
+
+    while(True):
+        email = input("Enter your email: ")
+        if verify_the_email(email):
+            break
+        else:
+            print("\nInvalid email. Please try again.")
+
+
+
+    while(True):
+        password = input("Enter your password: ")
+        c_password = input("Confirm your password: ")
+        if password == c_password:
+            break
+        else:
+            print("Passwords don't match. Please try again.")
+
+    while(True):
+        phone_number = input("Enter your phone number: ")
+        if is_valid_phone_number(phone_number):
+            break
+        else:
+            print("\nInvalid phone number. Please try again.")
+
+
+    if verify_via_otp():
+        cursor.execute("INSERT INTO consumers (email, password, phone_number) VALUES (?, ?, ?)",
+                       (email, password, phone_number))
+        connection.commit()
+        print("\nConsumer user created successfully.\n")
+    else:
+        print("Failed to create consumer user.")
+        return None
 
 if __name__ == '__main__':
     
@@ -115,8 +205,10 @@ if __name__ == '__main__':
 
                 if ch==1:
                     create_new_farmer_user()
+                    break
                 elif ch==2:
                     create_new_consumer_user()
+                    break
                 elif ch==3:
                     print("\ngetting back to menu")
                     break
@@ -154,7 +246,25 @@ if __name__ == '__main__':
                             break
 
                 elif(user == "consumer"):
-                    pass
+
+                    print("\n---- menu ----")
+
+                    display_all_products()
+
+                    print("1. buy products")
+                    print("2. pre booking ")
+                    print("3. Exit\n")
+
+                    ch=int(input("\nEnter your choice: "))
+
+                    if ch==1:
+                        buy_products()
+                    elif ch==2:
+                        pre_booking()
+                    elif ch==3:
+                        print("\ngetting back to menu")
+                        break
+
 
             else:
 
