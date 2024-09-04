@@ -11,20 +11,93 @@ def is_valid_phone_number(phone_number: str) -> bool:
     pattern = r'^\+?1?\d{9,15}$'
     return re.match(pattern, phone_number) is not None
 
+def display_all_products():
+    cursor.execute("SELECT * FROM product_page")
+    products = cursor.fetchall()
+    for product in products:
+        print(product)
+
 def buy_products():
-     pass
+
+    product = input("Enter the product name: ")
+    capacity = input("Enter the product capacity: ")
+    date = input("Enter the delivery date (YYYY-MM-DD): ")
+
+    INSERT_PRODUCT = '''
+    INSERT INTO request_farmers (product, capacity, date)
+    VALUES (?, ?, ?);
+    '''
+    # cursor.execute("insert into consumers (buyed_products) values (?)", (product_name,))
+
+    
+    cursor.execute(INSERT_PRODUCT, (product, capacity, date))
+
+    connection.commit()
+
+    print(f"Purchase confirmed for {product} with a capacity of {capacity}. Delivery is scheduled for {date}.")
+
+
 def pre_booking():
-    pass
+    # Prompt user for input
+    name = input("Enter the product name for pre-booking: ")
+    capacity = input("Enter the product capacity: ")
+    date = input("Enter the delivery date (YYYY-MM-DD): ")
+
+    # SQL command to insert a new record into the Products table
+    INSERT_PRODUCT = '''
+    INSERT INTO request_farmers_prebooking (product, capacity, date)
+    VALUES (?, ?, ?);
+    '''
+    # cursor.execute("insert into consumers (prebooked_products) values (?)", (product_name,))
+
+    # Execute the command and commit the changes
+    cursor.execute(INSERT_PRODUCT, (name, capacity, date))
+    connection.commit()
+
+    # Display a confirmation message
+    print(f"Pre-booking confirmed for {name} with a capacity of {capacity}. Delivery is scheduled for {date}.")
 
 def add_product():
-    pass
-def update_product():
-    pass
-def delete_product():
-    pass
 
-def display_all_products():
-    pass
+    product_name = input("Enter the product name: ")
+    product_description = input("Enter the description: ")
+    product_capacity = input("Enter the product capacity: ")
+    product_price = input("Enter the product price: ")
+    product_avaliability = "yes" if input("Is the product available? (yes/no): ") == "yes" else "no"
+    duration = input("enter the duration:")
+
+    INSERT_PRODUCT = '''
+    INSERT INTO product_page (name, description, capacity,price,available_product,duration)
+    VALUES (?, ?, ?, ?, ?, ?);
+    '''
+    
+    cursor.execute(INSERT_PRODUCT, (product_name, product_description, product_capacity, product_price, product_avaliability, duration))
+
+    connection.commit()
+
+    print("\nproduct added successfully")
+
+def update_product():
+    display_all_products()
+    product_name = input("Enter the product name: ")
+    field_name =  input("Enter the field name: ")
+    new_value = input("Enter the new value to insert: ")
+
+    query = f"UPDATE product_page SET {field_name} = ? WHERE name = ?"
+    
+    # Execute the update query
+    cursor.execute(query, (new_value, product_name))
+    connection.commit()
+
+    print(f"Product ID {product_name} updated successfully!")
+
+def delete_product():
+    display_all_products()
+    product_name = input("Enter the product name to delete: ")
+    cursor.execute("delete from product_page where name = ?", (product_name,))
+    connection.commit()
+
+
 def verify_the_email(email: str) -> bool:
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     return re.match(pattern, email) is not None
@@ -76,7 +149,7 @@ def verify_via_otp(to_phone_number: str) -> bool:
     message = Client(account_sid, auth_token).messages.create(
         body=f"Your OTP is {otp}",
         from_='+18307420985',
-        to=to_phone_number
+        to= '+91' + to_phone_number
     )
 
     if(otp == input("Enter OTP: ")):
@@ -90,7 +163,7 @@ def create_new_farmer_user() :
     email = ''
     address = ''
     password = ''
-    c-password = ''
+    c_password = ''
     phone_number = ''
     pincode  = ''
     products = ''
@@ -125,9 +198,9 @@ def create_new_farmer_user() :
 
     products = input("(please separate the products by comma)Enter your products: ")
 
-    if verify_via_otp():
-        cursor.execute("INSERT INTO farmers (email, password, phone_number, address, pincode, products) VALUES (?, ?, ?, ?, ?, ?)",
-                       (email, password, phone_number, address, pincode, products))
+    if verify_via_otp(phone_number):
+        cursor.execute("INSERT INTO farmers (email, address, password, phone_number, pincode, products) VALUES (?, ?, ?, ?, ?, ?)",
+                       (email, address, password,phone_number,  pincode, products))
         connection.commit()
         print("\n Farmer user created successfully.\n")
     else:
@@ -139,7 +212,7 @@ def create_new_consumer_user():
     
     email = ''
     password = ''
-    c-password = ''
+    c_password = ''
     phone_number = ''
 
     while(True):
@@ -167,8 +240,8 @@ def create_new_consumer_user():
             print("\nInvalid phone number. Please try again.")
 
 
-    if verify_via_otp():
-        cursor.execute("INSERT INTO consumers (email, password, phone_number) VALUES (?, ?, ?)",
+    if verify_via_otp(phone_number):
+        cursor.execute("INSERT INTO consumers (email, password, phonenumber) VALUES (?, ?, ?)",
                        (email, password, phone_number))
         connection.commit()
         print("\nConsumer user created successfully.\n")
@@ -246,20 +319,20 @@ if __name__ == '__main__':
                     print("\n---- menu ----")
 
                     display_all_products()
+                    while(True):
+                        print("1. buy products")
+                        print("2. pre booking ")
+                        print("3. Exit\n")
 
-                    print("1. buy products")
-                    print("2. pre booking ")
-                    print("3. Exit\n")
+                        ch=int(input("\nEnter your choice: "))
 
-                    ch=int(input("\nEnter your choice: "))
-
-                    if ch==1:
-                        buy_products()
-                    elif ch==2:
-                        pre_booking()
-                    elif ch==3:
-                        print("\ngetting back to menu")
-                        break
+                        if ch==1:
+                            buy_products()
+                        elif ch==2:
+                            pre_booking()
+                        elif ch==3:
+                            print("\ngetting back to menu")
+                            break
 
 
             else:
