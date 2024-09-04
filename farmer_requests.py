@@ -38,11 +38,12 @@ def select_all_farmer_requests():
         rows = c.fetchall()
         output = ''
         for row in rows:
-            output += f"ID: {row[0]}, ConsumerName: {row[1]}, Email: {row[2]}, PhoneNumber: {row[3]}, ProductRequested: {row[4]}, RequestedDeliveryDate: {row[5]}, RequestedDeliveryTime: {row[6]}\n"
+            output += (f"ID: {row[0]}, ConsumerName: {row[1]}, Email: {row[2]}, PhoneNumber: {row[3]}, "
+                       f"ProductRequested: {row[4]}, RequestedDeliveryDate: {row[5]}, RequestedDeliveryTime: {row[6]}\n")
     conn.close()
     return output
 
-# Select a specific record from FarmerRequests table
+# Select a specific record from FarmerRequests table by ID
 def select_farmer_request_by_id(request_id):
     conn = sqlite3.connect('farmer_requests.db')
     with conn:
@@ -51,11 +52,12 @@ def select_farmer_request_by_id(request_id):
         row = c.fetchone()
         output = ''
         if row:
-            output = f"ID: {row[0]}, ConsumerName: {row[1]}, Email: {row[2]}, PhoneNumber: {row[3]}, ProductRequested: {row[4]}, RequestedDeliveryDate: {row[5]}, RequestedDeliveryTime: {row[6]}"
+            output = (f"ID: {row[0]}, ConsumerName: {row[1]}, Email: {row[2]}, PhoneNumber: {row[3]}, "
+                      f"ProductRequested: {row[4]}, RequestedDeliveryDate: {row[5]}, RequestedDeliveryTime: {row[6]}")
     conn.close()
     return output
 
-# Delete a record from FarmerRequests table
+# Delete a record from FarmerRequests table by ID
 def delete_farmer_request(request_id):
     conn = sqlite3.connect('farmer_requests.db')
     with conn:
@@ -70,8 +72,12 @@ if __name__ == '_main_':
     # Insert example record
     insert_farmer_request('John Doe', 'john.doe@example.com', '123-456-7890', 'Apples', '2024-09-15', '10:00 AM')
     # Print all records
+    print("All Farmer Requests:")
     print(select_all_farmer_requests())
     # Print a specific record by ID
+    print("\nFarmer Request with ID 1:")
     print(select_farmer_request_by_id(1))
     # Delete a record by ID
     delete_farmer_request(1)
+    print("\nAll Farmer Requests after deletion:")
+    print(select_all_farmer_requests())

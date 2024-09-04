@@ -62,3 +62,20 @@ def create_consumers_table():
     print("Table 'consumers' created successfully.")
 
     create_consumers_table()
+
+
+
+
+CREATE_PRODUCT_STATUS = '''
+CREATE TABLE IF NOT EXISTS product_status (
+    id INTEGER PRIMARY KEY,
+    product_name TEXT NOT NULL,
+    mark_as_unavailable BOOLEAN NOT NULL
+);
+'''
+def create_product_status_table():
+    conn = sqlite3.connect('database.db')
+    with conn:
+        conn.execute(CREATE_PRODUCT_STATUS)
+        print("ok")
+        create_product_status_table()
