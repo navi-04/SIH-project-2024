@@ -80,7 +80,7 @@ def verify_via_otp(to_phone_number: str) -> bool:
     message = Client(account_sid, auth_token).messages.create(
         body=f"Your OTP is {otp}",
         from_='+18307420985',
-        to=to_phone_number
+        to= '+91' + to_phone_number
     )
 
     if(otp == input("Enter OTP: ")):
@@ -94,7 +94,7 @@ def create_new_farmer_user() :
     email = ''
     address = ''
     password = ''
-    c-password = ''
+    c_password = ''
     phone_number = ''
     pincode  = ''
     products = ''
@@ -129,9 +129,9 @@ def create_new_farmer_user() :
 
     products = input("(please separate the products by comma)Enter your products: ")
 
-    if verify_via_otp():
-        cursor.execute("INSERT INTO farmers (email, password, phone_number, address, pincode, products) VALUES (?, ?, ?, ?, ?, ?)",
-                       (email, password, phone_number, address, pincode, products))
+    if verify_via_otp(phone_number):
+        cursor.execute("INSERT INTO farmers (email, address, password, phone_number, pincode, products) VALUES (?, ?, ?, ?, ?, ?)",
+                       (email, address, password,phone_number,  pincode, products))
         connection.commit()
         print("\n Farmer user created successfully.\n")
     else:
@@ -143,7 +143,7 @@ def create_new_consumer_user():
     
     email = ''
     password = ''
-    c-password = ''
+    c_password = ''
     phone_number = ''
 
     while(True):
@@ -171,7 +171,7 @@ def create_new_consumer_user():
             print("\nInvalid phone number. Please try again.")
 
 
-    if verify_via_otp():
+    if verify_via_otp(phone_number):
         cursor.execute("INSERT INTO consumers (email, password, phone_number) VALUES (?, ?, ?)",
                        (email, password, phone_number))
         connection.commit()
