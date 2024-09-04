@@ -12,84 +12,19 @@ def is_valid_phone_number(phone_number: str) -> bool:
     return re.match(pattern, phone_number) is not None
 
 def buy_products():
-     print("\n---- Buy Products ----")
-    display_all_products()
-    product_name = input("Enter the name of the product you want to buy: ")
-    cursor.execute("SELECT * FROM product_page WHERE name=?", (product_name,))
-    product = cursor.fetchone()
-
-    if product and product[5]:  # Check if the product is available
-        print(f"You bought {product[1]} for {product[4]}.\n")
-    else:
-        print("Product is not available or doesn't exist.\n")
-
-
+     pass
 def pre_booking():
-    print("\n---- Pre-book Products ----")
-    display_all_products()
-    product_name = input("Enter the name of the product you want to pre-book: ")
-    cursor.execute("SELECT * FROM product_page WHERE name=?", (product_name,))
-    product = cursor.fetchone()
-
-    if product:
-        print(f"You have pre-booked {product[1]}.\n")
-    else:
-        print("Product doesn't exist.\n")
-
+    pass
 
 def add_product():
-    print("\n---- Add Product ----")
-    name = input("Enter product name: ")
-    description = input("Enter product description: ")
-    capacity = input("Enter product capacity: ")
-    price = float(input("Enter product price: "))
-    available_product = input("Is the product available (yes/no): ").strip().lower() == 'yes'
-    duration = input("Enter product duration: ")
-
-    cursor.execute("INSERT INTO product_page (name, description, capacity, price, available_product, duration) VALUES (?, ?, ?, ?, ?, ?)",
-                   (name, description, capacity, price, available_product, duration))
-    connection.commit()
-    print("\nProduct added successfully.\n")
-
+    pass
 def update_product():
-    print("\n---- Update Product ----")
-    name = input("Enter the product name you want to update: ")
-    cursor.execute("SELECT * FROM product_page WHERE name=?", (name,))
-    product = cursor.fetchone()
-
-    if product:
-        new_description = input("Enter new description: ")
-        new_capacity = input("Enter new capacity: ")
-        new_price = float(input("Enter new price: "))
-        new_available_product = input("Is the product available (yes/no): ").strip().lower() == 'yes'
-        new_duration = input("Enter new duration: ")
-
-        cursor.execute("""
-            UPDATE product_page
-            SET description=?, capacity=?, price=?, available_product=?, duration=?
-            WHERE name=?""",
-            (new_description, new_capacity, new_price, new_available_product, new_duration, name))
-        connection.commit()
-        print("\nProduct updated successfully.\n")
-    else:
-        print("Product not found.")
-
+    pass
 def delete_product():
-    print("\n---- Delete Product ----")
-    name = input("Enter the product name you want to delete: ")
-    cursor.execute("DELETE FROM product_page WHERE name=?", (name,))
-    connection.commit()
-    print("\nProduct deleted successfully.\n")
+    pass
 
 def display_all_products():
-    print("\n---- All Products ----")
-    cursor.execute("SELECT * FROM product_page")
-    products = cursor.fetchall()
-
-    for product in products:
-        print(f"Name: {product[1]}, Description: {product[2]}, Capacity: {product[3]}, Price: {product[4]}, Available: {product[5]}, Duration: {product[6]}")
-    print("\n")
-
+    pass
 def verify_the_email(email: str) -> bool:
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     return re.match(pattern, email) is not None
