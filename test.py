@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS product_page (
 );
 '''
 def create_product_page_table():
-    conn = sqlite3.connect('products.db')
+    conn = sqlite3.connect('database.db')
     with conn:
         conn.execute(CREATE_PRODUCT_PAGE)
         print("ok")
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS consumers (
 );
 '''
 def create_consumers_table():
-    conn = sqlite3.connect('consumers.db')
+    conn = sqlite3.connect('database.db')
     with conn:
         conn.execute(CREATE_CONSUMERS_TABLE)
     conn.close()
