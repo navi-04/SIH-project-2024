@@ -21,3 +21,21 @@ def create_farmers_table():
 
 create_farmers_table()
 
+# SQL Commands
+CREATE_PRODUCT_PAGE = '''
+CREATE TABLE IF NOT EXISTS product_page (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    description TEXT,
+    capacity TEXT,
+    price REAL,
+    available_product BOOLEAN,
+    duration TEXT
+);
+'''
+def create_product_page_table():
+    conn = sqlite3.connect('products.db')
+    with conn:
+        conn.execute(CREATE_PRODUCT_PAGE)
+        print("ok")
+create_product_page_table()
