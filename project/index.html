@@ -138,10 +138,11 @@
         </div>
         <div id="consumerDashboard" class="hidden">
             <h2>Consumer Dashboard</h2>
-            <div id="productList"></div>
+            <div id="productList" class="hidden"></div>
             <ul class="menu">
-                <li><button onclick="showBuyProductForm()">Buy Products</button></li>
+                <li><button onclick="showBuyProductForm()  ">Buy Products</button></li>
                 <li><button onclick="showPreBookingForm()">Pre-booking</button></li>
+                <!-- <li><button onclick="viewAvailableProducts();">View Available Products</button></li> -->
                 <li><button onclick="logout()">Logout</button></li>
             </ul>
             <div id="buyProductForm" class="hidden">
@@ -158,6 +159,10 @@
                     <div class="form-group">
                         <label for="buyProductDate">Delivery Date:</label>
                         <input type="date" id="buyProductDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fund">Fund Amount : (Optional: minimum 1rs)</label>
+                        <input type="number" id="fund" >
                     </div>
                     <button type="submit">Buy</button>
                 </form>
