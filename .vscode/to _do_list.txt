@@ -1,0 +1,18 @@
+1.change into react
+2.farmer access using mobile
+3.chatbot train using hardware inputs
+4.implement machine learning
+5.fund calculator
+6.block chain
+7.payment security and contact razorpay for payment
+8.farmer accessibility
+9.fingerprint and voice access for farmers
+10.language access for chatbot
+11.fingerprint and otp access for login
+12.product availability and rate according to pincode
+13.collect vegetable photos for display 1080
+14.****LOGO****
+15.animation
+16.save charity amount for farmers
+17.fixing of minimum price for farmers
+18.background image for webpage
