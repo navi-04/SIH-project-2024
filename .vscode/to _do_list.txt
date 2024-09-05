@@ -1,0 +1,7 @@
+1.change into react
+2.farmer access using mobile
+3.chatbot train using hardware inputs
+4.implement machine learning
+5.fund calculator
+
+
