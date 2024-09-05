@@ -1,1 +1,0 @@
-cursor.execute("delete from request_farmers where id = 1")
