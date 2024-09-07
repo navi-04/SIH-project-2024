@@ -25,3 +25,5 @@ def voice_to_text():
 
 # Call the function
 voice_to_text()
+# List all available microphone devices
+print(sr.Microphone.list_microphone_names())
