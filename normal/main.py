@@ -188,7 +188,7 @@ def create_new_farmer_user() :
             print("Passwords don't match. Please try again.")
 
     while(True):
-        phone_number = input("Enter your phone number: ")
+        phone_number = input("Enter your phone number: ")    
         if is_valid_phone_number(phone_number):
             break
         else:
