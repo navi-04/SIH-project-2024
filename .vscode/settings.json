@@ -2,6 +2,6 @@
     "python.analysis.indexing": true,
     "python.analysis.autoSearchPaths": true,
     "python.analysis.extraPaths": [
-        "c:\\users\\naveenraj.t\\appdata\\local\\packages\\pythonsoftwarefoundation.python.3.11_qbz5n2kfra8p0\\localcache\\local-packages\\python311\\site-packages"
+        "c:\\users\\srmmo\\appdata\\local\\packages\\pythonsoftwarefoundation.python.3.12_qbz5n2kfra8p0\\localcache\\local-packages\\python312\\site-packages"
     ]
 }
