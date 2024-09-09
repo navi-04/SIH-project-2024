@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmers Connection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .menu {
+            list-style-type: none;
+            padding: 0;
+        }
+        .menu li {
+            margin-bottom: 10px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Farmers Connection</h1>
+        <div id="mainMenu">
+            <ul class="menu">
+                <li><button onclick="showRegisterMenu()">Register (for new users only)</button></li>
+                <li><button onclick="showLoginForm()">Login (for existing users only)</button></li>
+                <li><button onclick="exit()">Exit</button></li>
+            </ul>
+        </div>
+        <div id="registerMenu" class="hidden">
+            <ul class="menu">
+                <li><button onclick="showFarmerRegistration()">Farmer</button></li>
+                <li><button onclick="showConsumerRegistration()">Consumer</button></li>
+                <li><button onclick="backToMainMenu()">Back to Main Menu</button></li>
+            </ul>
+        </div>
+        <div id="farmerRegistration" class="hidden">
+            <h2>Farmer Registration</h2>
+            <form id="farmerForm">
+                <div class="form-group">
+                    <label for="farmerEmail">Email:</label>
+                    <input type="email" id="farmerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="farmerAddress">Address:</label>
+                    <input type="text" id="farmerAddress" required>
+                </div>
+                <div class="form-group">
+                    <label for="farmerPassword">Password:</label>
+                    <input type="password" id="farmerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="farmerPhone">Phone Number:</label>
+                    <input type="tel" id="farmerPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="farmerPincode">Pincode:</label>
+                    <input type="text" id="farmerPincode" required>
+                </div>
+                <div class="form-group">
+                    <label for="farmerProducts">Products (comma-separated):</label>
+                    <input type="text" id="farmerProducts" required>
+                </div>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+        <div id="consumerRegistration" class="hidden">
+            <h2>Consumer Registration</h2>
+            <form id="consumerForm">
+                <div class="form-group">
+                    <label for="consumerEmail">Email:</label>
+                    <input type="email" id="consumerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="consumerPassword">Password:</label>
+                    <input type="password" id="consumerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="consumerPhone">Phone Number:</label>
+                    <input type="tel" id="consumerPhone" required>
+                </div>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+        <div id="loginForm" class="hidden">
+            <h2>Login</h2>
+            <form id="loginFormElement">
+                <div class="form-group">
+                    <label for="loginEmail">Email:</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password:</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="userType">User Type:</label>
+                    <select id="userType">
+                        <option value="farmer">Farmer</option>
+                        <option value="consumer">Consumer</option>
+                    </select>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+        <div id="farmerDashboard" class="hidden">
+            <h2>Farmer Dashboard</h2>
+            <ul class="menu">
+                <li><button onclick="showAddProductForm()">Add Product</button></li>
+                <li><button onclick="showUpdateProductForm()">Update Product</button></li>
+                <li><button onclick="showDeleteProductForm()">Delete Product</button></li>
+                <li><button onclick="viewAvailableProducts()">View Available Products</button></li>
+                <li><button onclick="logout()">Logout</button></li>
+            </ul>
+            <div id="productManagement" class="hidden">
+                <h3 id="productFormTitle"></h3>
+                <form id="productForm">
+                    <div class="form-group">
+                        <label for="productName">Product Name:</label>
+                        <input type="text" id="productName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productDescription">Description:</label>
+                        <input type="text" id="productDescription" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productCapacity">Capacity:</label>
+                        <input type="text" id="productCapacity" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productPrice">Price:</label>
+                        <input type="text" id="productPrice" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productAvailability">Available:</label>
+                        <select id="productAvailability">
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="productDuration">Duration:</label>
+                        <input type="text" id="productDuration" required>
+                    </div>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+        <div id="consumerDashboard" class="hidden">
+            <h2>Consumer Dashboard</h2>
+            <div id="productList"></div>
+            <ul class="menu">
+                <li><button onclick="showBuyProductForm()">Buy Products</button></li>
+                <li><button onclick="showPreBookingForm()">Pre-booking</button></li>
+                <li><button onclick="logout()">Logout</button></li>
+            </ul>
+            <div id="buyProductForm" class="hidden">
+                <h3>Buy Product</h3>
+                <form id="buyForm">
+                    <div class="form-group">
+                        <label for="buyProductName">Product Name:</label>
+                        <input type="text" id="buyProductName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="buyProductCapacity">Capacity:</label>
+                        <input type="text" id="buyProductCapacity" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="buyProductDate">Delivery Date:</label>
+                        <input type="date" id="buyProductDate" required>
+                    </div>
+                    <button type="submit">Buy</button>
+                </form>
+            </div>
+            <div id="preBookingForm" class="hidden">
+                <h3>Pre-booking</h3>
+                <form id="preBookForm">
+                    <div class="form-group">
+                        <label for="preBookProductName">Product Name:</label>
+                        <input type="text" id="preBookProductName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="preBookProductCapacity">Capacity:</label>
+                        <input type="text" id="preBookProductCapacity" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="preBookProductDate">Delivery Date:</label>
+                        <input type="date" id="preBookProductDate" required>
+                    </div>
+                    <button type="submit">Pre-book</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simulated database
+        let users = [];
+        let products = [];
+        let requests = [];
+        let prebookings = [];
+
+        function showRegisterMenu() {
+            hideAllSections();
+            document.getElementById('registerMenu').classList.remove('hidden');
+        }
+
+        function showLoginForm() {
+            hideAllSections();
+            document.getElementById('loginForm').classList.remove('hidden');
+        }
+
+        function exit() {
+            alert('Thank you for using our application');
+        }
+
+        function backToMainMenu() {
+            hideAllSections();
+            document.getElementById('mainMenu').classList.remove('hidden');
+        }
+
+        function showFarmerRegistration() {
+            hideAllSections();
+            document.getElementById('farmerRegistration').classList.remove('hidden');
+        }
+
+        function showConsumerRegistration() {
+            hideAllSections();
+            document.getElementById('consumerRegistration').classList.remove('hidden');
+        }
+
+        function logout() {
+            hideAllSections();
+            document.getElementById('mainMenu').classList.remove('hidden');
+        }
+
+        function hideAllSections() {
+            const sections = ['mainMenu', 'registerMenu', 'farmerRegistration', 'consumerRegistration', 'loginForm', 'farmerDashboard', 'consumerDashboard', 'productManagement', 'buyProductForm', 'preBookingForm'];
+            sections.forEach(section => document.getElementById(section).classList.add('hidden'));
+        }
+
+        function isValidEmail(email) {
+            const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return re.test(String(email).toLowerCase());
+        }
+
+        function isValidPhoneNumber(phone) {
+            const re = /^\+?1?\d{9,15}$/;
+            return re.test(String(phone));
+        }
+
+        function verifyViaOTP(phone) {
+            // Simulating OTP verification
+            return confirm('OTP sent. Click OK to simulate successful verification.');
+        }
+
+        document.getElementById('farmerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('farmerEmail').value;
+            const password = document.getElementById('farmerPassword').value;
+            const phone = document.getElementById('farmerPhone').value;
+
+            if (!isValidEmail(email)) {
+                alert('Invalid email format');
+                return;
+            }
+
+            if (!isValidPhoneNumber(phone)) {
+                alert('Invalid phone number');
+                return;
+            }
+
+            if (verifyViaOTP(phone)) {
+                users.push({
+                    type: 'farmer',
+                    email: email,
+                    password: password,
+                    address: document.getElementById('farmerAddress').value,
+                    phone: phone,
+                    pincode: document.getElementById('farmerPincode').value,
+                    products: document.getElementById('farmerProducts').value.split(',')
+                });
+                alert('Farmer user created successfully');
+                backToMainMenu();
+            } else {
+                alert('Failed to create farmer user');
+            }
+        });
+
+        document.getElementById('consumerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('consumerEmail').value;
+            const password = document.getElementById('consumerPassword').value;
+            const phone = document.getElementById('consumerPhone').value;
+
+            if (!isValidEmail(email)) {
+                alert('Invalid email format');
+                return;
+            }
+
+            if (!isValidPhoneNumber(phone)) {
+                alert('Invalid phone number');
+                return;
+            }
+
+            if (verifyViaOTP(phone)) {
+                users.push({
+                    type: 'consumer',
+                    email: email,
+                    password: password,
+                    phone: phone
+                });
+                alert('Consumer user created successfully');
+                backToMainMenu();
+            } else {
+                alert('Failed to create consumer user');
+            }
+        });
+
+        document.getElementById('loginFormElement').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const userType = document.getElementById('userType').value;
+
+            const user = users.find(u => u.email === email && u.password === password && u.type === userType);
+
+            if (user) {
+                alert('Login successful');
+                if (user.type === 'farmer') {
+                    showFarmerDashboard();
+                } else {
+                    showConsumerDashboard();
+                }
+            } else {
+                alert('Invalid username or password');
+            }
+        });
+
+        function showFarmerDashboard() {
+            hideAllSections();
+            document.getElementById('farmerDashboard').classList.remove('hidden');
+            viewAvailableProducts();
+        }
+
+        function showConsumerDashboard() {
+            hideAllSections();
+            document.getElementById('consumerDashboard').classList.remove('hidden');
+            viewAvailableProducts();
+        }
+
+        function showAddProductForm() {
+            document.getElementById('productFormTitle').textContent = 'Add Product';
+            document.getElementById('productManagement').classList.remove('hidden');
+            document.getElementById('productForm').onsubmit = addProduct;
+        }
+
+        function showUpdateProductForm() {
+            document.getElementById('productFormTitle').textContent = 'Update Product';
+            document.getElementById('productManagement').classList.remove('hidden');
+            document.getElementById('productForm').onsubmit = updateProduct;
+        }
+
+        function showDeleteProductForm() {
+            document.getElementById('productFormTitle').textContent = 'Delete Product';
+            document.getElementById('productManagement').classList.remove('hidden');
+            document.getElementById('productForm').onsubmit = deleteProduct;
+        }
+
+        function addProduct(e) {
+            e.preventDefault();
+            const product = {
+                name: document.getElementById('productName').value,
+                description: document.getElementById('productDescription').value,
+                capacity: document.getElementById('productCapacity').value,
+                price: document.getElementById('productPrice').value,
+                available: document.getElementById('productAvailability').value,
+                duration: document.getElementById('productDuration').value
+            };
+            products.push(product);
+            alert('Product added successfully');
+            viewAvailableProducts();
+        }
+
+        function updateProduct(e) {
+            e.preventDefault();
+            const productName = document.getElementById('productName').value;
+            const productIndex = products.findIndex(p => p.name === productName);
+            if (productIndex !== -1) {
+                products[productIndex] = {
+                    name: productName,
+                    description: document.getElementById('productDescription').value,
+                    capacity: document.getElementById('productCapacity').value,
+                    price: document.getElementById('productPrice').value,
+                    available: document.getElementById('productAvailability').value,
+                    duration: document.getElementById('productDuration').value
+                };
+                alert('Product updated successfully');
+                viewAvailableProducts();
+            } else {
+                alert('Product not found');
+            }
+        }
+
+        function deleteProduct(e) {
+            e.preventDefault();
+            const productName = document.getElementById('productName').value;
+            const productIndex = products.findIndex(p => p.name === productName);
+            if (productIndex !== -1) {
+                products.splice(productIndex, 1);
+                alert('Product deleted successfully');
+                viewAvailableProducts();
+            } else {
+                alert('Product not found');
+            }
+        }
+
+        function viewAvailableProducts() {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '<h3>Available Products</h3>';
+            if (products.length === 0) {
+                productList.innerHTML += '<p>No products available</p>';
+            } else {
+                products.forEach(product => {
+                    productList.innerHTML += `
+                        <p>Name: ${product.name}, Capacity: ${product.capacity}, Price: ${product.price}, 
+                        Available: ${product.available}, Duration: ${product.duration}</p>
+                    `;
+                });
+            }
+        }
+
+        function showBuyProductForm() {
+            document.getElementById('buyProductForm').classList.remove('hidden');
+        }
+
+        function showPreBookingForm() {
+            document.getElementById('preBookingForm').classList.remove('hidden');
+        }
+
+        document.getElementById('buyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const request = {
+                product: document.getElementById('buyProductName').value,
+                capacity: document.getElementById('buyProductCapacity').value,
+                date: document.getElementById('buyProductDate').value
+            };
+            requests.push(request);
+            alert(`Purchase confirmed for ${request.product} with a capacity of ${request.capacity}. Delivery is scheduled for ${request.date}.`);
+        });
+
+        document.getElementById('preBookForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const prebooking = {
+                product: document.getElementById('preBookProductName').value,
+                capacity: document.getElementById('preBookProductCapacity').value,
+                date: document.getElementById('preBookProductDate').value
+            };
+            prebookings.push(prebooking);
+            alert(`Pre-booking confirmed for ${prebooking.product} with a capacity of ${prebooking.capacity}. Delivery is scheduled for ${prebooking.date}.`);
+        });
+
+        // Initialize the application
+        backToMainMenu();
+    </script>
+</body>
+</html>
