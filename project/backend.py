@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 def create_connection():
     connection = sqlite3.connect('database.db')
-    return connection
+    return connection 
 
 # Initialize the database
 def init_db():
