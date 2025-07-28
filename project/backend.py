@@ -10,7 +10,7 @@ def create_connection():
 # Initialize the database
 def init_db():
     connection = create_connection()
-    cursor = connection.cursor()
+    cursor = connection.cursor() 
 
     cursor.execute('''CREATE TABLE IF NOT EXISTS farmers (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
